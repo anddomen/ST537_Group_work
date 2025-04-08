@@ -1,0 +1,13 @@
+---
+title: "Replicate a plot"
+author: "ST537 Group 4"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+# Replication option:

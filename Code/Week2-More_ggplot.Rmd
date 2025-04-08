@@ -1,0 +1,47 @@
+---
+title: "More ggplot2: Facets, Geoms, Stats, Positioning and Coords"
+author: "ST537 Group 4"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+# 3.5 Facets
+## Paul
+
+```{r}
+
+```
+
+# 3.6 Geometric objects
+## 
+
+```{r}
+
+```
+
+# 3.7 Statistical transformations
+## John
+
+```{r}
+
+```
+
+# 3.8 Position adjustments
+## 
+
+```{r}
+
+```
+
+# 3.9 Coordinate systems
+## Andrea
+
+```{r}
+
+```
+
