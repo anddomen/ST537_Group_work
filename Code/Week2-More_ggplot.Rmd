@@ -28,7 +28,7 @@ library(tidyverse)
 ## John
 
 ```{r}
-
+test
 ```
 
 # 3.8 Position adjustments
@@ -40,6 +40,18 @@ library(tidyverse)
 
 # 3.9 Coordinate systems
 ## Andrea
+
+
+
+
+
+
+
+
+
+
+
+
 
 ```{r}
 mpg |> 
@@ -83,6 +95,9 @@ bar + coord_polar()
 ## 3.9.1 Exercises
 1.
 ```{r}
+JCorbett
+test 2
+
 mpg |> 
   ggplot() +
   geom_bar(aes(x = manufacturer, 
