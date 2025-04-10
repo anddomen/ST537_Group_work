@@ -53,18 +53,18 @@ mpg |>
   coord_flip()
 
 # graph the world
-nz <- map_data("world")
+world <- map_data("world")
 
-nz |> 
+world |> 
   ggplot(aes(long, lat,
              group = group)) +
   geom_polygon(fill = "steelblue", color = "black") 
 
-nz |> 
+world |> 
   ggplot(aes(long, lat,
              group = group)) +
   geom_polygon(fill = "steelblue", color = "black") +
-  coord_quickmap()     # fixes aspect ratio
+  coord_quickmap()    
 
 # pie graph
 bar <- diamonds |> 
