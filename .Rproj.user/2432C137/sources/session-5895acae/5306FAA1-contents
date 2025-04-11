@@ -1,0 +1,10 @@
+library(readxl)
+library(writexl)
+
+mak <- read_xlsx("/Users/andreadomen/Downloads/makayla's data she needs to model to get inflection points.xlsx")
+
+mak.long <- mak |> 
+  pivot_longer(4:18, names_to = "Dose")
+
+
+write_xlsx(mak.long, path = "/Users/andreadomen/Downloads/mak_fixed.xlsx")
