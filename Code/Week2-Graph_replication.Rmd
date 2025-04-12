@@ -8,7 +8,7 @@ output: pdf_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
-library(LaCroixColoR)
+# library(LaCroixColoR)
 ```
 
 # Replication option: Wildfires in California
@@ -39,15 +39,15 @@ wildfires.sum <- wildfires |>                # sum up the wildfires per year
   summarize(sum_acres = sum(gis_acres))      # add up wildfires by year
 
 # color palette for graph
-lacroix_pal <- lacroix_palette("PeachPear", n = 9, type = "continuous") |> 
-  rev()                                      # reverse the color scheme                      
+# lacroix_pal <- lacroix_palette("PeachPear", n = 9, type = "continuous") |> 
+  # rev()                                      # reverse the color scheme                      
 
 wildfires.sum |> 
   ggplot(aes(x = year_,                      # initial graph structure
              y = 1,                          # no data here, just need a number
              fill = sum_acres)) +            # add the summed acres
   geom_tile(stat = "identity") +             # tile geom 
-  scale_fill_gradientn(colors = lacroix_pal, name = "Acres") + # add colors from object above and set legend title
+  # scale_fill_gradientn(colors = lacroix_pal, name = "Acres") + # add colors from object above and set legend title
   theme(panel.grid.major = element_blank(), # removing grid lines
         panel.grid.minor = element_blank(), # removing grid lines
         panel.background = element_rect(fill="#31333B"), # changing plot background to gray
