@@ -42,16 +42,17 @@ wildfires.sum <- wildfires |>                # sum up the wildfires per year
   group_by(year_) |>                         # group data by year
   summarize(sum_acres = sum(gis_acres))      # add up wildfires by year
 
-# color palette for graph
-# lacroix_pal <- lacroix_palette("PeachPear", n = 9, type = "continuous") |> 
-  # rev()                                      # reverse the color scheme                      
-
 wildfires.sum |> 
   ggplot(aes(x = year_,                      # initial graph structure
              y = 1,                          # no data here, just need a number
              fill = sum_acres)) +            # add the summed acres
   geom_tile(stat = "identity") +             # tile geom 
-  # scale_fill_gradientn(colors = lacroix_pal, name = "Acres") + # add colors from object above and set legend title
+  scale_fill_gradient(
+    low = "#330000", high = "#FF6600", name = "Acres"
+  ) + 
+  labs(title = "Annual Wildfire Acreage Burned in the U.S. (1950–2020)") +
+  scale_x_continuous(breaks = seq(1950, 2020, 10))+ 
+  theme_minimal(base_family = "mono") +
   theme(panel.grid.major = element_blank(), # removing grid lines
         panel.grid.minor = element_blank(), # removing grid lines
         panel.background = element_rect(fill="#31333B"), # changing plot background to gray
@@ -66,7 +67,8 @@ wildfires.sum |>
         axis.title.x = element_blank(), # removing x axis title
         axis.title.y = element_blank(), # removing y axis title
         axis.text.y = element_blank(), # removing y axis labels
-        axis.ticks.y = element_blank() # removing y axis ticks
+        axis.ticks.y = element_blank(), # removing y axis ticks
+        plot.title = element_text(color = "lightgray", family = "mono", size = 14, hjust = 0.5)
         )
 
 ```
