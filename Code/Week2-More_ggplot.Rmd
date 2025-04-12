@@ -75,9 +75,39 @@ ggplot(mpg, aes(x = displ, y = hwy, fill = drv)) +
 # 3.7 Statistical transformations
 ## John
 
-```{r}
+1.	What is the default geom associated with stat_summary()? How could you rewrite the previous plot to use that geom function instead of the stat function?
 
+The default geom associated with stat_summary() is a pointrange. You could rewrite the previous plot as follows:
+
+```{r}
+diamonds.df <- diamonds %>%
+  group_by(cut) %>%
+  summarize(
+    median_depth = median(depth),
+    min_depth = min(depth),
+    max_depth = max(depth)
+  )
+
+ggplot(diamonds.df, aes(x = cut, y = median_depth, ymin = min_depth, ymax = max_depth)) +
+  geom_pointrange()
 ```
+
+2.	What does geom_col() do? How is it different to geom_bar()?
+
+Geom_bar() counts the number of observations in each category, and geom_col() provides the values; it just draws bars based on the values you give it.
+
+3.	Most geoms and stats come in pairs that are almost always used in concert. Read through the documentation and make a list of all the pairs. What do they have in common?
+
+The common thread through these is that stat_x() transforms the data, while geom_x() handles the visualization of the data. 
+
+4.	What variables does stat_smooth() compute? What parameters control its behavior?
+
+Stat_smooth() computes the variables x (predictor variable), y (response variable), ymin (lower bound of confidence interval), ymax (upper bound of confidence interval), and se (whether the confidence interval is shown). The parameters that control its behavior are method (smoothing method for the line), formula (a custom model formula), se (whether to show the confidence interval), level (confidence level), span (smoothing span for method = “loess”), fullrange (whether or not to extend the line to plot limits), and geom (whether to display as smooth, line, or ribbon). 
+
+5.	In our proportion bar chart, we need to set group = 1. Why? In other words, what is the problem with these two graphs?
+
+Without group = 1 in the first plot, ggplot treats cut as its own group, so the proportions were calculated within each bar but not across all bars. Similarly, in the second graph, the proportions are calculated within the fill group rather than across fill groups.
+
 
 # 3.8 Position adjustments
 ## 
@@ -88,6 +118,18 @@ ggplot(mpg, aes(x = displ, y = hwy, fill = drv)) +
 
 # 3.9 Coordinate systems
 ## Andrea
+
+
+
+
+
+
+
+
+
+
+
+
 
 ```{r}
 mpg |> 
