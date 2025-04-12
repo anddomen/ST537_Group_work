@@ -47,7 +47,24 @@ wildfires.sum |>
              y = 1,                          # no data here, just need a number
              fill = sum_acres)) +            # add the summed acres
   geom_tile(stat = "identity") +             # tile geom 
-  scale_fill_gradientn(colors = lacroix_pal) # add colors from object above
+  scale_fill_gradientn(colors = lacroix_pal, name = "Acres") + # add colors from object above and set legend title
+  theme(panel.grid.major = element_blank(), # removing grid lines
+        panel.grid.minor = element_blank(), # removing grid lines
+        panel.background = element_rect(fill="#31333B"), # changing plot background to gray
+        plot.background = element_rect(fill="#31333B"), # changing margin background to gray
+        legend.background = element_rect(fill="#31333B"), # changing legend background to gray
+        legend.title = element_text(color = "lightgray", family = "mono"), # changing color and font of legend title
+        legend.text = element_text(color = "lightgray", family = "mono"), # changing color and font of legend labels
+        legend.ticks = element_blank(), # removing ticks on legend gradient
+        axis.line = element_blank(), # removing all axis lines
+        axis.text.x = element_text(color = "lightgray", family = "mono"), # changing color and font of x axis labels
+        axis.ticks.x = element_blank(), # removing x axis ticks
+        axis.title.x = element_blank(), # removing x axis title
+        axis.title.y = element_blank(), # removing y axis title
+        axis.text.y = element_blank(), # removing y axis labels
+        axis.ticks.y = element_blank() # removing y axis ticks
+        )
+
 ```
 
 
