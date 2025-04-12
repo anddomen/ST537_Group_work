@@ -18,9 +18,57 @@ library(tidyverse)
 ```
 
 # 3.6 Geometric objects
-## 
+## Matt
 
 ```{r}
+## 1 ##
+## geom_line() , geom_boxplot() , geom_histogram() , 	geom_area() ##
+
+## 2 ##
+## displays highway mpg of vehicles with different displacements w/seperate trend lines
+## of 4wd, fwd, and rwd (smoothed) ##
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
+  geom_point() + 
+  geom_smooth(se = FALSE)
+
+## 3 ##
+## helps hide a specific layer from being displayed. Without it that legend in the 
+## layer would be visible. ##
+
+## 4 ##
+## se adds a area around the line that is shaded, representing the standard error
+## with a 95% CI. ##
+
+## 5 ##
+## no these would not look different as they functionally do the same thing, just
+## present the code in two differing ways. ##
+
+## 6 ##
+## Graph 1##
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point() +
+  geom_smooth()
+
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(color = "black") +
+  geom_smooth(aes(group = drv), color = "blue", se = FALSE)
+
+ggplot(mpg, aes(x = displ, y = hwy, color = drv)) +
+  geom_point() +
+  geom_smooth(se = FALSE)
+
+ggplot(mpg, aes(x = displ, y = hwy, color = drv)) +
+  geom_point() +
+  geom_smooth(color = "blue", se = FALSE)
+
+ggplot(mpg, aes(x = displ, y = hwy, color = drv, linetype = drv)) +
+  geom_point() +
+  geom_smooth(color = "blue", se = FALSE)
+
+ggplot(mpg, aes(x = displ, y = hwy, fill = drv)) +
+  geom_point(shape = 21, color = "white", size = 2) +
+  geom_smooth(aes(color = drv), se = FALSE)
+
 
 ```
 
