@@ -8,6 +8,66 @@ output: pdf_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(LaCroixColoR)
 ```
 
-# Replication option:
+# Replication option: Wildfires in California
+```{r}
+wildfires <- readr::read_csv("https://raw.githubusercontent.com/BuzzFeedNews/2018-07-wildfire-trends/master/data/calfire_frap.csv") %>% 
+  mutate(plot_date = as.Date(format(alarm_date,"2017-%m-%d"))) |> 
+  filter(!is.na(gis_acres))     # remove NA's
+```
+
+
+## Original graph replication
+```{r}
+wildfires |> 
+  ggplot(aes(y = year_,                                    # set up initial plot
+             x = plot_date,
+             size = gis_acres)) + 
+  geom_point() +                                           # point graph geom
+  scale_y_reverse(breaks = c(1950, 1970, 1990, 2010),      # add year breaks
+                  minor_breaks = seq(1950, 2017, by = 1)) +
+  scale_x_date(date_labels = "%b",                         # add month labels
+               date_breaks = "1 month")
+```
+
+## Alternate graph
+```{r}
+wildfires.sum <- wildfires |>                # sum up the wildfires per year
+  group_by(year_) |>                         # group data by year
+  summarize(sum_acres = sum(gis_acres))      # add up wildfires by year
+
+# color palette for graph
+lacroix_pal <- lacroix_palette("PeachPear", n = 9, type = "continuous") |> 
+  rev()                                      # reverse the color scheme                      
+
+wildfires.sum |> 
+  ggplot(aes(x = year_,                      # initial graph structure
+             y = 1,                          # no data here, just need a number
+             fill = sum_acres)) +            # add the summed acres
+  geom_tile(stat = "identity") +             # tile geom 
+  scale_fill_gradientn(colors = lacroix_pal, name = "Acres") + # add colors from object above and set legend title
+  theme(panel.grid.major = element_blank(), # removing grid lines
+        panel.grid.minor = element_blank(), # removing grid lines
+        panel.background = element_rect(fill="#31333B"), # changing plot background to gray
+        plot.background = element_rect(fill="#31333B"), # changing margin background to gray
+        legend.background = element_rect(fill="#31333B"), # changing legend background to gray
+        legend.title = element_text(color = "lightgray", family = "mono"), # changing color and font of legend title
+        legend.text = element_text(color = "lightgray", family = "mono"), # changing color and font of legend labels
+        legend.ticks = element_blank(), # removing ticks on legend gradient
+        axis.line = element_blank(), # removing all axis lines
+        axis.text.x = element_text(color = "lightgray", family = "mono"), # changing color and font of x axis labels
+        axis.ticks.x = element_blank(), # removing x axis ticks
+        axis.title.x = element_blank(), # removing x axis title
+        axis.title.y = element_blank(), # removing y axis title
+        axis.text.y = element_blank(), # removing y axis labels
+        axis.ticks.y = element_blank() # removing y axis ticks
+        )
+
+```
+
+
+
+
+

@@ -95,8 +95,6 @@ bar + coord_polar()
 ## 3.9.1 Exercises
 1.
 ```{r}
-JCorbett
-test 2
 
 mpg |> 
   ggplot() +
