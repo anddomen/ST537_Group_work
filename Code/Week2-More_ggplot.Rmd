@@ -14,9 +14,71 @@ library(maps)
 # 3.5 Facets
 ## Paul
 
-```{r}
+Facets are subplots that each display one subset of the data. I'll use the following R code to illustrate the use of facets.
 
+For example:
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_wrap(~ class, nrow = 2)
 ```
+
+In the code above, facet_wrap() facets your plot by a single discrete variable, in this case, denoted by (~ class). Recall that the nrow = 2 just arranges the panels in 2 rows.
+
+facet_grid() is used if you want to plot on a combination of two variables. In this case, you're arguments are just two discrete variables separated by a formula sign, (rows ~ columns). To omit a facet in either the rows or columns, use . instead of a variable name, (. ~ cyl).
+
+For example:
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_grid(drv ~ cyl)
+```
+
+### 3.5.1 Exercises
+
+1. What happens if you facet on a continuous variable?
+
+ANSWER: R will treat each value as a discrete variable. If you have a dataset of n > 10 your graph may become unreadable or if you have a reasonably large dataset (n > 1000), your system may struggle to visualize the number of graphs.
+
+2. What do the empty cells in plot with facet_grid (drv ~ cyl) mean? How do they relate to this plot?
+
+ANSWER: We know that drv is the number of drives and cyl is the number of cylinders. The empty cells indicate the combinations of drv and cyl that don't exist. For instance, we see that in our dataset, four wheel drive vehicles don't come in 5 or 7 cylinder models.
+  
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = drv, y = cyl))
+  facet_grid (drv ~ cyl)
+```
+  
+3. What plots does the following code make? What does . do?
+
+ANSWER: The first is a graph with a facet wrap on rows drv, omitting the columns facet. The second is a graph with a facet wrap on columns, omitting the rows facet. Using the argument . in place of the rows or colums argument will omit that facet dimention.
+
+```{r}
+# graph 1
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(drv ~ .)
+
+# graph 2
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(. ~ cyl)
+```
+
+4. Take the first faceted plot in this section. What are the advantages to using faceting instead of the color aesthetic? What are the disadvantages? How might the balance change if you had a larger dataset?
+
+ANSWER: The advantages to using faceting instead of color aesthetic is the separation of the data in each class. Similar to jittering, it allows for a clearer visualization of the data by reducing overlapping information. Since the data are separate, drawing conclusions about shared patterns may be more difficult. A larger dataset, with the same number of classes, would likely benefit from faceting as they data would be even easier to read separated in this way than combined and color coded.
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_wrap(~ class, nrow = 2)
+```
+5. Read ?facet_wrap. What does nrow do? What does ncol do? What other options control the layout of the individual panels? Why doesn’t facet_grid() have nrow and ncol arguments?
+
+ANSWER: nrow numerates the number of rows, ncol the number of columns. Some other options for layout control of individual panels include: as.table (table or plot), dir (fill rows first or columns first), strip.position (where the labels appear), switch (switches labels from top right to bottom left). facet_grid() uses the data structure to shape the plots, not layout preferences.
+
+6. When using facet_grid() you should usually put the variable with more unique levels in the columns. Why? It makes better use of the horizontal screen space. Most plots are wider than they are tall.
 
 # 3.6 Geometric objects
 ## Matt
@@ -111,7 +173,7 @@ Without group = 1 in the first plot, ggplot treats cut as its own group, so the 
 
 
 # 3.8 Position adjustments
-## 
+## Miles
 
 1. Points are overlapping, meaning you cannot tell where clusters are.
 ```{r}
@@ -132,6 +194,7 @@ ggplot(mpg)+
 
 
 ```
+
 # 3.9 Coordinate systems
 ## Andrea
 
@@ -186,8 +249,11 @@ bar <- diamonds |>
 bar + coord_flip()
 bar + coord_polar()
 ```
+
 ## 3.9.1 Exercises
+
 1.
+
 ```{r}
 mpg |> 
   ggplot() +
