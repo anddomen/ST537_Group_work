@@ -1,0 +1,57 @@
+---
+title: "Replicate a plot"
+author: "ST537 Group 4"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(LaCroixColoR)
+```
+
+# Replication option: Wildfires in California
+```{r}
+wildfires <- readr::read_csv("https://raw.githubusercontent.com/BuzzFeedNews/2018-07-wildfire-trends/master/data/calfire_frap.csv") %>% 
+  mutate(plot_date = as.Date(format(alarm_date,"2017-%m-%d"))) |> 
+  filter(!is.na(gis_acres))     # remove NA's
+```
+
+
+## Original graph replication
+```{r}
+wildfires |> 
+  ggplot(aes(y = year_,                                    # set up initial plot
+             x = plot_date,
+             size = gis_acres)) + 
+  geom_point() +                                           # point graph geom
+  scale_y_reverse(breaks = c(1950, 1970, 1990, 2010),      # add year breaks
+                  minor_breaks = seq(1950, 2017, by = 1)) +
+  scale_x_date(date_labels = "%b",                         # add month labels
+               date_breaks = "1 month")
+```
+
+## Alternate graph
+```{r}
+wildfires.sum <- wildfires |>           # sum up the wildfires per year
+  group_by(year_) |> 
+  summarize(sum_acres = sum(gis_acres))
+
+lacroix_pal <- lacroix_palette("PeachPear", n = 9, type = "continuous") |> rev()
+
+wildfires.sum |> 
+  ggplot(aes(x = year_,
+             y = 1,
+             fill = sum_acres)) +
+  geom_tile(stat = "identity") +
+  scale_fill_gradientn(colors = lacroix_pal) +
+  theme_minimal()+
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
+```
+
+
+
+
+
