@@ -35,12 +35,25 @@ library(maps)
 # 3.8 Position adjustments
 ## 
 
+1. Points are overlapping, meaning you cannot tell where clusters are.
 ```{r}
+
+ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) + 
+  geom_jitter()
+
+```
+2. width and height
+
+3. geom_count() counts the number of points with the same value and displays them in the same location by scaling the point. geom_jitter() randomly moves each point by a small amount, removing point overlap.
+
+4. Stacking
+```{r}
+ggplot(mpg)+
+  geom_bar(aes(x = class, fill = trans))
 
 
 
 ```
-
 # 3.9 Coordinate systems
 ## Andrea
 
