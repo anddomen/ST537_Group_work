@@ -1,0 +1,31 @@
+---
+title: "Alternative Commute Plot"
+author: "Group 4"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+```{r}
+commute <- read_rds("Data/commute.rds")          # import data
+states <- c("or", "ak", "ca", "wa", "id", "nv")  # states of interest
+commute_nw <- filter(commute, state %in% states) # make df for graphing
+```
+
+
+```{r}
+# Charlotte's original graph
+ggplot(commute_nw) +
+  geom_bar(aes(x = "", y = prop, fill = factor(transport_type)), 
+    stat = "identity", width = 1) +
+  facet_wrap(~ state_name) +
+  coord_polar(theta = "y") +
+  theme_minimal(18) + 
+  xlab("") + ylab("") +
+  theme(axis.text = element_blank())
+```
+
