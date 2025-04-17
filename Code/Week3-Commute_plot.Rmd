@@ -1,8 +1,13 @@
 ---
 title: "Alternative Commute Plot"
-author: "Group 4"
+author: "ST 537 Group 4"
 date: "`r Sys.Date()`"
 output: pdf_document
+knit: (function(inputFile, encoding) {
+      out_dir <- "../Outputs";
+      rmarkdown::render(inputFile,
+                        encoding=encoding,
+                        output_dir=file.path(dirname(inputFile), out_dir))})
 ---
 
 ```{r setup, include=FALSE}
@@ -10,22 +15,29 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
 
-```{r}
-commute <- read_rds("Data/commute.rds")          # import data
-states <- c("or", "ak", "ca", "wa", "id", "nv")  # states of interest
-commute_nw <- filter(commute, state %in% states) # make df for graphing
+```{r, include=FALSE}
+# commute <- read_rds("Data/commute.rds")              # import data
+commute <- read_rds("../../../../../../../Desktop/commute.rds")              # import data
+states <- c("or", "ak", "ca", "wa", "id", "nv")      # states of interest
+commute_nw <- filter(commute, state %in% states)     # make df for graphing
 ```
 
-
-```{r}
-# Charlotte's original graph
-ggplot(commute_nw) +
-  geom_bar(aes(x = "", y = prop, fill = factor(transport_type)), 
-    stat = "identity", width = 1) +
-  facet_wrap(~ state_name) +
-  coord_polar(theta = "y") +
-  theme_minimal(18) + 
-  xlab("") + ylab("") +
-  theme(axis.text = element_blank())
+```{r, echo=FALSE}
+commute_nw |>
+  filter(transport_type == "Bicycle") |>              # filter on bikes
+  ggplot(aes(x = reorder(state_name, -prop),          # decending x axis
+             y = prop*100,
+             fill = reorder(state_name, -prop))) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = c("steelblue", "gray",   # make OR different color
+                               "gray", "gray", "gray", "gray")) +
+  theme_classic() +
+  theme(legend.position = "none") +                   # hide legend
+  labs(x = "State",                                   # edit graph labels
+       y = "Percent of commuters",
+       title = "Oregon commutes to work by bike more than other western states")
 ```
 
+### Justification
+
+We decided to only graph the bike portion of the commuter data since that was the comparison of interest in the original graph. We went with a bar chart to minimize possible reader error with a common scale to have the highest ranking on the perceptual tasks. We also used positioning and color to help with preattentive search.
