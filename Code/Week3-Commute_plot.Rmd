@@ -39,4 +39,4 @@ commute_nw |>
 
 ### Justification
 
-We decided to only graph the bike portion of the commuter data since that was the comparison of interest in the original graph. We went with a bar chart to minimize possible reader error with a common scale to have the highest ranking on the perceptual tasks. We also used positioning and color to help with preattentive search.
+We decided to only graph the bike portion of the commuter data since that was the comparison of interest in the original graph. We went with a bar chart to minimize possible reader error with a common scale to have the highest ranking on the perceptual tasks. We also used positioning and color to help with preattentive search. These are improvements over the original by using position along a common scale rather than area.
